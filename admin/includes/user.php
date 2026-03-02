@@ -54,7 +54,29 @@ public $rule;
             return false;
         }
 
-}
+    }
+
+
+    public function update($id, $username, $password, $rule)
+    {
+        global $obj;
+        $query = $obj->query("UPDATE users set `username` ='$username' , `password` = '$password' , `rule` = '$rule' where id = '$id'");
+        if ($query) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function delete($id){
+    global $obj;
+    $query = $obj->query("DELETE FROM users where `id` = '$id'");
+    if($query){
+    return true;
+    }else{
+        return false;
+    }
+    }
 }
 
 $user = new User();

@@ -15,7 +15,7 @@ class Connect
     public function connectDB()
     {
 
-        $this->db = new mysqli("localhost", "root", "", "market_db");
+        $this->db = new mysqli("localhost", "root", "", "market_ds");
         if ($this->db->connect_errno) {
 
             echo "Error: " . $this->db->connect_errno;
