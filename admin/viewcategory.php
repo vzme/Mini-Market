@@ -53,7 +53,7 @@
                   <td><?php echo $category->id ?></td>
                   <td><?php echo $category->name ?></td>
                   <td>
-                    <button class="btn btn-success"><a href="update.php?id" class="text-white">Update</a></button>
+                    <a href="viewcategory.php?c_id=<?php echo $category->name; ?>" class="text-white btn btn-success">Update</a>
                     <button class="btn btn-danger"><a class="text-decoration-none text-white" href="delete.php?id">Delete</a></button>
                   </td>
 
@@ -69,6 +69,50 @@
 
   </div>
 </div>
+
+
+
+
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+         <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+  <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <?php
+        $editUser = null;
+        if (isset($_GET['c_id'])) {
+          $name = $_GET['c_id'];
+          $g = $category->getOneCategory($name);
+
+        ?>
+          <input type="text" name="username" class="form-control" value="<?php echo $g->id; ?>">
+          <input type="text" name="password" class="form-control" value="<?php echo $g->name; ?>">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+        <button type="submit" name="update_user" class="btn btn-success">Save</button>
+      </div>
+    </div>
+    </form>
+  </div>
+</div>
+<?php } ?>
+
+<?php if (isset($_GET['c_id'])) { ?>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      var myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
+      myModal.show();
+    });
+  </script>
+<?php } ?>
 
 
 <?php require("includes/footer.php"); ?>

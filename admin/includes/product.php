@@ -62,6 +62,17 @@ public function create($category_id , $name_product , $buy_price , $sell_price ,
         return $userClass;
     }
 
+    public function delete($id){
+        global $obj;
+        $query = $obj->query("DELETE FROM product where id = '$id'");
+        if($query){
+            return true;
+        }else{
+            return false;
+        }
+
+    }
+
 }
 
 $pro = new Product();

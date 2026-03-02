@@ -23,7 +23,7 @@ class Category{
 
     public static function getOneCategory($name){
     
-    $single_user = self::query_process("SELECT id FROM category where name = '$name'");
+    $single_user = self::query_process("SELECT * FROM category where name = '$name'");
     return !empty($single_user) ? array_shift($single_user) : false;
     }
 
@@ -47,6 +47,17 @@ class Category{
             $userClass->$property = $info;
         }
         return $userClass;
+    }
+
+    public function delete($id){
+    global $obj;
+    $query = $obj->query("DELETE FROM catagory where id = '$id'");
+    if($query){
+    return true;
+    }else{
+        return false;
+    }
+
     }
 
 
