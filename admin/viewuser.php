@@ -1,6 +1,10 @@
-<?php require("includes/nav.php");
-solider(2);
+<?php
 
+
+require("includes/nav.php");
+solider(2);
+require("api/update_user.php");
+require("api/delete_user.php");
 
 
 ?>
@@ -62,36 +66,11 @@ solider(2);
                   <td><?php echo $user->password; ?></td>
                   <td><?php echo $user->rule; ?></td>
                   <td>
-                    <button class="btn btn-success" 
-                    data-bs-toggle="modal" data-bs-target="#exampleModal" >Update</button>
-                    <button class="btn btn-danger"><a href="delete.php?id">Delete</a></button>
+                    <a href="?edit_id=<?php echo $user->id; ?>" class="btn btn-success">Update</a>
+                    <a class="text-white btn btn-danger" href="?del_id=<?php echo $user->id; ?>">Delete</a>
                   </td>
+                  <input type="hidden" name="user_id" value="<?php echo $user->id; ?>">
                 <?php } ?>
-
-                                  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                          <?php 
-                          
-
-                          ?>
-                          <input type="text" class="form-contorl" value="<?php echo $user->username ?>">
-                          <input type="text" class="form-control" value="<?php echo $user->password ?>">
-                          <input type="text" class="form-control" value="<?php echo $user->rule ?>">
-                          
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                          <button type="button" class="btn btn-primary">Save changes</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
 
                 </tr>
             </tbody>
@@ -102,5 +81,49 @@ solider(2);
 
   </div>
 </div>
+
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+         <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+  <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <?php
+        $editUser = null;
+        if (isset($_GET['edit_id'])) {
+          $user_id = $_GET['edit_id'];
+          $g = $user->getOneUser($user_id);
+
+        ?>
+          <input type="text" name="username" class="form-control" value="<?php echo $g->username; ?>">
+          <input type="text" name="password" class="form-control" value="<?php echo $g->password; ?>">
+          <input type="number" name="rule" class="form-control" value="<?php echo $g->rule; ?>">
+          <input type="hidden" name="user_id" value="<?php echo $g->id; ?>">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+        <button type="submit" name="update_user" class="btn btn-success">Save</button>
+      </div>
+    </div>
+    </form>
+  </div>
+</div>
+<?php } ?>
+
+<?php if (isset($_GET['edit_id'])) { ?>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      var myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
+      myModal.show();
+    });
+  </script>
+<?php } ?>
+
 
 <?php require("includes/footer.php"); ?>

@@ -10,6 +10,7 @@ $query = $user->create($username , $password , $rule);
 if($query){
 
 echo "successfuly";
+header("Location:viewuser.php");
 
 }else{
 

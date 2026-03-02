@@ -66,7 +66,7 @@
                     <td><?php echo $pro->date_expired; ?></td>
                     
                   <td>
-                    <button class="btn btn-success"><a href="update.php?id" class="text-white">Update</a></button>
+                    <a href="?edit_id=<?php echo $pro->id; ?>" class="btn btn-success">Update</a>
                     <button class="btn btn-danger"><a class="text-decoration-none text-white" href="delete.php?id">Delete</a></button>
                   </td>
                   <?php } ?>
@@ -80,9 +80,46 @@
   </div>
 </div>
 
+  <?php
+        if (isset($_GET['edit_id'])) {
+          $product_id = $_GET['edit_id'];
+          $g = $pro->getProductById($product_id);
+        }
+        ?>
 
 
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+         <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+  <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
 
+      <div class="modal-body">
+          <input type="text" name="username" class="form-control" value="<?php echo $g->name_product; ?>">
+          <input type="text" name="password" class="form-control" value="<?php echo $g->buy_price; ?>">
+          <input type="number" name="rule" class="form-control" value="<?php echo $g->sell_price; ?>">
+          <input type="hidden" name="user_id" value="<?php echo $g->id; ?>">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+        <button type="submit" name="update_user" class="btn btn-success">Save</button>
+      </div>
+    </div>
+    </form>
+  </div>
+</div>
+
+<?php if (isset($_GET['edit_id'])) { ?>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      var myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
+      myModal.show();
+    });
+  </script>
+<?php } ?>
 
 
 

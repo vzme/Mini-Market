@@ -13,6 +13,11 @@ public $rule;
     return $query;
     }
 
+       public static function getOneUser($id){
+    $single_user = self::query_process("SELECT * FROM users where id = '$id'");
+    return !empty($single_user) ? array_shift($single_user) : false;
+    }
+
 
     public static  function query_process($data){
         global $obj;
@@ -70,7 +75,7 @@ public $rule;
 
     public function delete($id){
     global $obj;
-    $query = $obj->query("DELETE FROM users where `id` = '$id'");
+    $query = $obj->query("DELETE FROM users where id = '$id'");
     if($query){
     return true;
     }else{

@@ -30,8 +30,14 @@ public function create($category_id , $name_product , $buy_price , $sell_price ,
 
     public static function getOneProduct($name){
     
-    $single_user = self::query_process("SELECT id FROM product where name = '$name'");
+    $single_product = self::query_process("SELECT id FROM product where name = '$name'");
     return !empty($single_user) ? array_shift($single_user) : false;
+    }
+
+    public static function getProductById($id){
+    
+    $single_product_id = self::query_process("SELECT * FROM product where name = '$id'");
+    return !empty($single_user) ? array_shift($single_product_id) : false;
     }
 
 
