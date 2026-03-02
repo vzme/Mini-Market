@@ -34,10 +34,11 @@ public function create($category_id , $name_product , $buy_price , $sell_price ,
     return !empty($single_user) ? array_shift($single_user) : false;
     }
 
+
     public static function getProductById($id){
     
-    $single_product_id = self::query_process("SELECT * FROM product where name = '$id'");
-    return !empty($single_user) ? array_shift($single_product_id) : false;
+    $single_product_id = self::query_process("SELECT * FROM product where id = '$id'");
+    return !empty($single_product_id) ? array_shift($single_product_id) : false;
     }
 
 
@@ -61,6 +62,13 @@ public function create($category_id , $name_product , $buy_price , $sell_price ,
         }
         return $userClass;
     }
+
+    // public function update($id){
+    //     global $obj;
+    //     if($query){
+
+    //     }
+    // }
 
     public function delete($id){
         global $obj;

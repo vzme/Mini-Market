@@ -44,65 +44,71 @@
             <tbody>
               <?php
               $all_product = $pro->getAllProduct();
-              foreach ($all_product as $pro) { 
+              foreach ($all_product as $p) { 
               ?>
               <tr>
-                <td><?php echo $pro->id; ?></td>
-                <td><?php echo $pro->category_id; ?></td>
-                <td><?php echo $pro->name_product; ?></td>
-                <td><?php echo $pro->buy_price; ?></td>
-                <td><?php echo $pro->sell_price; ?></td>
-                <td><?php echo $pro->quantity; ?></td>
-                <td><?php echo $pro->date_create; ?></td>
-                <td><?php echo $pro->date_expired; ?></td>
-                <td>
-                  <a href="?edit_id=<?php echo $pro->id; ?>" class="btn btn-success btn-sm">Update</a>
-                  <button class="btn btn-danger btn-sm"><a class="text-decoration-none text-white" href="?del_id=<?php echo $pro->id; ?>">Delete</a></button>
-                </td>
-              </tr>
-              <?php } ?>
+                <td><?php echo $p->id; ?></td>
+                <td><?php echo $p->category_id; ?></td>
+                <td><?php echo $p->name_product; ?></td>
+                <td><?php echo $p->buy_price; ?></td>
+                <td><?php echo $p->sell_price; ?></td>
+                <td><?php echo $p->quantity; ?></td>
+                <td><?php echo $p->date_create; ?></td>
+                <td><?php echo $p->date_expired; ?></td>
+               <td>
+                    <a href="viewproduct.php?p_id=<?php echo $p->id; ?>" class="text-white btn btn-success">Update</a>
+                    <button class="btn btn-danger"><a class="text-decoration-none text-white" href="delete.php?id=<?php echo $p->id; ?>">Delete</a></button>
+                  </td>
+                  </tr>
+                  <?php } ?>
+      
+              
             </tbody>
           </table>
         </div>
       </div>
     </div>
+
   </div>
 </div>
 
-<!-- Modal - Form INSIDE modal-content -->
+
+
 
 
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
-         <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
-  <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-
-      <div class="modal-body">
-        <?php
-        $editUser = null;
-        if (isset($_GET['c_id'])) {
-          $name = $_GET['c_id'];
-          $g = $pro->getOneProduct($name);
-
-        ?>
-          <input type="text" name="username" class="form-control" value="<?php echo $g->id; ?>">
-          <input type="text" name="password" class="form-control" value="<?php echo $g->name; ?>">
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-        <button type="submit" name="update_user" class="btn btn-success">Save</button>
-      </div>
-    </div>
-    </form>
+    <?php
+    if (isset($_GET['p_id'])) {
+      $id = $_GET['p_id'];
+      $g = $pro->getProductById($id); 
+      
+      if($g){ ?>
+        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Product</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <label>Product Name</label>
+              <input type="text" name="name" class="form-control mb-2" value="<?php echo $g->name_product; ?>">
+              <label>Buy Price</label>
+              <input type="text" name="buy_price" class="form-control" value="<?php echo $g->buy_price; ?>">
+              <input type="hidden" name="id" value="<?php echo $g->id; ?>">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+              <button type="submit" name="update_product" class="btn btn-success">Update</button>
+            </div>
+          </div>
+        </form>
+      <?php } 
+    } ?>
   </div>
 </div>
-<?php } ?>
 
-<?php if (isset($_GET['c_id'])) { ?>
+<?php if (isset($_GET['p_id'])) { ?>
   <script>
     document.addEventListener("DOMContentLoaded", function() {
       var myModal = new bootstrap.Modal(document.getElementById('exampleModal'));

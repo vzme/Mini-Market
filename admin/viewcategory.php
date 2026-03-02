@@ -1,7 +1,7 @@
-<?php require("includes/nav.php"); ?>
-
-
-
+<?php 
+require("includes/nav.php"); 
+require("api/update_category.php");
+?>
 
 <div class="container-fluid mt-5">
   <div class="row px-4"> <div class="col-md-2">
@@ -47,20 +47,19 @@
             </thead>
             <tbody>
                 <?php
-    $all_category = $category->getAllCategory();
-    foreach($all_category as $category){ ?>
+            $get_category = $cat->getAllCategory();
+foreach($get_category as $c){ ?>
                   <tr>
-                  <td><?php echo $category->id ?></td>
-                  <td><?php echo $category->name ?></td>
+                  <td><?php echo $c->id ?></td>
+                  <td><?php echo $c->name ?></td>
                   <td>
-                    <a href="viewcategory.php?c_id=<?php echo $category->name; ?>" class="text-white btn btn-success">Update</a>
-                    <button class="btn btn-danger"><a class="text-decoration-none text-white" href="delete.php?id">Delete</a></button>
+                    <a href="viewcategory.php?c_name=<?php echo $c->id; ?>" class="text-white btn btn-success">Update</a>
+                    <button class="btn btn-danger"><a class="text-decoration-none text-white" href="delete.php?id=<?php echo $cat->id; ?>">Delete</a></button>
                   </td>
-
+                  </tr>
                   <?php } ?>
-     
+      
               
-              </tr>
             </tbody>
           </table>
         </div>
@@ -86,26 +85,27 @@
 
       <div class="modal-body">
         <?php
-        $editUser = null;
-        if (isset($_GET['c_id'])) {
-          $name = $_GET['c_id'];
-          $g = $category->getOneCategory($name);
-
-        ?>
-          <input type="text" name="username" class="form-control" value="<?php echo $g->id; ?>">
-          <input type="text" name="password" class="form-control" value="<?php echo $g->name; ?>">
+        if (isset($_GET['c_name'])) {
+      $name_param = $_GET['c_name'];
+      $g = $cat->getOneCategory($name_param); 
+      
+      if($g){ ?>
+          <input type="text" name="name" class="form-control" value="<?php echo $g->name; ?>">
+          <input type="hidden" name="id" value="<?php echo $g->id; ?>">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-        <button type="submit" name="update_user" class="btn btn-success">Save</button>
+        <button type="submit" name="update_category" class="btn btn-success">Update</button>
       </div>
     </div>
     </form>
+     <?php } 
+    } ?>
   </div>
 </div>
-<?php } ?>
 
-<?php if (isset($_GET['c_id'])) { ?>
+
+<?php if (isset($_GET['c_name'])) { ?>
   <script>
     document.addEventListener("DOMContentLoaded", function() {
       var myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
@@ -113,6 +113,5 @@
     });
   </script>
 <?php } ?>
-
 
 <?php require("includes/footer.php"); ?>
