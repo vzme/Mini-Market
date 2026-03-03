@@ -1,8 +1,9 @@
 <?php
- require("includes/nav.php");
- require("api/delete_product.php");
- 
- ?>
+require("includes/nav.php");
+require("api/update_product.php");
+require("api/delete_product.php");
+
+?>
 <div class="container-fluid mt-5">
   <div class="row px-4">
     <div class="col-md-2">
@@ -44,25 +45,25 @@
             <tbody>
               <?php
               $all_product = $pro->getAllProduct();
-              foreach ($all_product as $p) { 
+              foreach ($all_product as $p) {
               ?>
-              <tr>
-                <td><?php echo $p->id; ?></td>
-                <td><?php echo $p->category_id; ?></td>
-                <td><?php echo $p->name_product; ?></td>
-                <td><?php echo $p->buy_price; ?></td>
-                <td><?php echo $p->sell_price; ?></td>
-                <td><?php echo $p->quantity; ?></td>
-                <td><?php echo $p->date_create; ?></td>
-                <td><?php echo $p->date_expired; ?></td>
-               <td>
+                <tr>
+                  <td><?php echo $p->id; ?></td>
+                  <td><?php echo $p->category_id; ?></td>
+                  <td><?php echo $p->name_product; ?></td>
+                  <td><?php echo $p->buy_price; ?></td>
+                  <td><?php echo $p->sell_price; ?></td>
+                  <td><?php echo $p->quantity; ?></td>
+                  <td><?php echo $p->date_create; ?></td>
+                  <td><?php echo $p->date_expired; ?></td>
+                  <td>
                     <a href="viewproduct.php?p_id=<?php echo $p->id; ?>" class="text-white btn btn-success">Update</a>
                     <button class="btn btn-danger"><a class="text-decoration-none text-white" href="delete.php?id=<?php echo $p->id; ?>">Delete</a></button>
                   </td>
-                  </tr>
-                  <?php } ?>
-      
-              
+                </tr>
+              <?php } ?>
+
+
             </tbody>
           </table>
         </div>
@@ -81,9 +82,9 @@
     <?php
     if (isset($_GET['p_id'])) {
       $id = $_GET['p_id'];
-      $g = $pro->getProductById($id); 
-      
-      if($g){ ?>
+      $g = $pro->getProductById($id);
+
+      if ($g) { ?>
         <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
           <div class="modal-content">
             <div class="modal-header">
@@ -91,11 +92,35 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+
+              <label>category_id</label>
+              <input type="text" name="category_id" class="form-control mb-2" value="<?php echo $g->category_id; ?>">
+
+
               <label>Product Name</label>
-              <input type="text" name="name" class="form-control mb-2" value="<?php echo $g->name_product; ?>">
+              <input type="text" name="name_product" class="form-control mb-2" value="<?php echo $g->name_product; ?>">
+
               <label>Buy Price</label>
               <input type="text" name="buy_price" class="form-control" value="<?php echo $g->buy_price; ?>">
+
+              <label>Sell Price</label>
+              <input type="text" name="sell_price" class="form-control" value="<?php echo $g->sell_price; ?>">
+
+
+              <label>Quantity</label>
+              <input type="text" name="quantity" class="form-control" value="<?php echo $g->quantity; ?>">
+
+
+              <label>Date Create</label>
+              <input type="date" name="date_create" class="form-control" value="<?php echo $g->date_create; ?>">
+              
+              <label>Date Expire</label>
+              <input type="date" name="date_expired" class="form-control" value="<?php echo $g->date_expired; ?>">
+              
+
+
               <input type="hidden" name="id" value="<?php echo $g->id; ?>">
+
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
@@ -103,7 +128,7 @@
             </div>
           </div>
         </form>
-      <?php } 
+    <?php }
     } ?>
   </div>
 </div>

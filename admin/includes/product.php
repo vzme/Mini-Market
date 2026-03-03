@@ -1,44 +1,48 @@
 <?php
-class Product{
+class Product
+{
 
-public $id;
-public $category_id;
-public $name_product;
-public $quantity;
-public $sell_price;
-public $buy_price;
-public $date_create;
-public $date_expired;
+    public $id;
+    public $category_id;
+    public $name_product;
+    public $quantity;
+    public $sell_price;
+    public $buy_price;
+    public $date_create;
+    public $date_expired;
 
 
-public function create($category_id , $name_product , $buy_price , $sell_price , $quantity  , $date_create , $date_expired){
+    public function create($category_id, $name_product, $buy_price, $sell_price, $quantity, $date_create, $date_expired)
+    {
         global $obj;
         $query = $obj->query("INSERT INTO product(`category_id`,`name_product`, `buy_price` , `sell_price` , `quantity`, `date_create` , `date_expired`)
                              VALUES('$category_id' , '$name_product' , '$buy_price' , '$sell_price' , '$quantity' , '$date_create' , '$date_expired')");
 
-        if($query){
-        return true;
-        }else{
+        if ($query) {
+            return true;
+        } else {
             return false;
         }
-
     }
 
-        public function getAllProduct(){
-    return self::query_process("SELECT * FROM product");    
+    public function getAllProduct()
+    {
+        return self::query_process("SELECT * FROM product");
     }
 
-    public static function getOneProduct($name){
-    
-    $single_product = self::query_process("SELECT id FROM product where name = '$name'");
-    return !empty($single_user) ? array_shift($single_user) : false;
+    public static function getOneProduct($name)
+    {
+
+        $single_product = self::query_process("SELECT id FROM product where name = '$name'");
+        return !empty($single_user) ? array_shift($single_user) : false;
     }
 
 
-    public static function getProductById($id){
-    
-    $single_product_id = self::query_process("SELECT * FROM product where id = '$id'");
-    return !empty($single_product_id) ? array_shift($single_product_id) : false;
+    public static function getProductById($id)
+    {
+
+        $single_product_id = self::query_process("SELECT * FROM product where id = '$id'");
+        return !empty($single_product_id) ? array_shift($single_product_id) : false;
     }
 
 
@@ -63,25 +67,27 @@ public function create($category_id , $name_product , $buy_price , $sell_price ,
         return $userClass;
     }
 
-    // public function update($id){
-    //     global $obj;
-    //     if($query){
-
-    //     }
-    // }
-
-    public function delete($id){
+    public function update($id, $category_id, $name_product, $buy_price, $sell_price, $quantity, $date_create, $date_expire)
+    {
         global $obj;
-        $query = $obj->query("DELETE FROM product where id = '$id'");
-        if($query){
+        $query = $obj->query("UPDATE product set `category_id` = '$category_id' , `name_product` = '$name_product' , `buy_price` = '$buy_price' , `sell_price` = '$sell_price' , `quantity` = '$quantity' , `date_create` = '$date_create' , `date_expired` = '$date_expire' WHERE id = '$id'");
+        if ($query) {
             return true;
-        }else{
+        } else {
             return false;
         }
-
     }
 
+    public function delete($id)
+    {
+        global $obj;
+        $query = $obj->query("DELETE FROM product where id = '$id'");
+        if ($query) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
 
 $pro = new Product();
-?>
