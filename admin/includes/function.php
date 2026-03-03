@@ -31,12 +31,4 @@ function solider($i){
 
 }
 
-
-
-
-
-
-
-
-
 ?>

@@ -1,6 +1,8 @@
 <?php 
 require("includes/nav.php"); 
 require("api/update_category.php");
+require("api/delete_category.php");
+
 ?>
 
 <div class="container-fluid mt-5">
@@ -54,7 +56,7 @@ foreach($get_category as $c){ ?>
                   <td><?php echo $c->name ?></td>
                   <td>
                     <a href="viewcategory.php?c_name=<?php echo $c->id; ?>" class="text-white btn btn-success">Update</a>
-                    <button class="btn btn-danger"><a class="text-decoration-none text-white" href="delete.php?id=<?php echo $cat->id; ?>">Delete</a></button>
+                    <a class="text-decoration-none text-white btn btn-danger" href="viewcategory.php?del_id=<?php echo $c->id; ?>">Delete</a>
                   </td>
                   </tr>
                   <?php } ?>

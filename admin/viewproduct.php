@@ -58,7 +58,7 @@ require("api/delete_product.php");
                   <td><?php echo $p->date_expired; ?></td>
                   <td>
                     <a href="viewproduct.php?p_id=<?php echo $p->id; ?>" class="text-white btn btn-success">Update</a>
-                    <button class="btn btn-danger"><a class="text-decoration-none text-white" href="delete.php?id=<?php echo $p->id; ?>">Delete</a></button>
+                    <a class="text-decoration-none btn btn-danger text-white" href="?del_id=<?php echo $p->id; ?>">Delete</a></button>
                   </td>
                 </tr>
               <?php } ?>

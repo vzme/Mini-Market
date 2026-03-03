@@ -21,10 +21,23 @@ class Category{
     return self::query_process("SELECT * FROM category");    
     }
 
+     public static function getjustId($name){
+    
+    $single_user = self::query_process("SELECT id FROM category where name = '$name'");
+    return !empty($single_user) ? array_shift($single_user) : false;
+    }
+
     public static function getOneCategory($id){
     
     $single_user = self::query_process("SELECT * FROM category where id = '$id'");
     return !empty($single_user) ? array_shift($single_user) : false;
+    }
+
+    public static  function getC(){
+    global $obj;
+    $query = $obj->query("SELECT * FROM category");
+    return $query;
+
     }
 
 
@@ -61,6 +74,16 @@ class Category{
 
         }
 
+    }
+
+    public function delete($id){
+        global $obj;
+        $query = $obj->query("DELETE FROM category where id = '$id'");
+        if ($query) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }
